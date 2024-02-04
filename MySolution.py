@@ -11,7 +11,6 @@ import cv2.aruco as aruco
 
 from color_identification import color_identification
 
-
 def get_node_pairs(n1, n2, both_ends=True):
     if both_ends:
         node_pairs = [[n1, n2], [n2, n1]]
