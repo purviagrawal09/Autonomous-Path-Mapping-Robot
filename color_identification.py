@@ -4,7 +4,8 @@ import numpy as np
 
 def color_identification(hsv):
     img = cv2.imread("image_for_color_identification.jpg")
-
+    
+#filter out a particular color using mask
     white_mask = cv2.inRange(hsv, np.array([0, 0, 100]), np.array([0, 255, 255]))
     red_mask = cv2.inRange(hsv, np.array([0, 100, 100]), np.array([10, 255, 255]))
     green_mask = cv2.inRange(hsv, np.array([40, 100, 100]), np.array([60, 255, 255]))
@@ -13,7 +14,7 @@ def color_identification(hsv):
     pink_mask = cv2.inRange(hsv, np.array([160, 0, 0]), np.array([170, 255, 255]))
     blue_mask = cv2.inRange(hsv, np.array([60, 0, 0]), np.array([140, 255, 255]))
 
-    # COLOR_CONTOURS
+    # COLOR_CONTOURS (obtaining the edges of each hexagon of a particular mask and store it in colour_contours array)
     white_contours, _ = cv2.findContours(white_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     cv2.drawContours(img, white_contours, -1, (255, 0, 0), 3)
     red_contours, _ = cv2.findContours(red_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -28,7 +29,8 @@ def color_identification(hsv):
     cv2.drawContours(img, pink_contours, -1, (255, 0, 0), 3)
     blue_contours, _ = cv2.findContours(blue_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     cv2.drawContours(img, blue_contours, -1, (255, 0, 0), 3)
-
+    
+#to display the image with contours
     # cv2.imshow("image with contours", img)
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
@@ -58,8 +60,11 @@ def color_identification(hsv):
                    colors_list[5] + colors_list[6]
     # Now removing multiple occurrences of a single location i.e. blue tiles
     all_hexagons = list(set(all_hexagons))
+    
+# sorting the array in y
     all_hexagons = sorted(all_hexagons, key=lambda x: x[1])
 
+    # all hexagons in sorted (x,y) in ordered_2D_hexagon
     ordered_2D_hexagons = []
     start = 0
     for i in range(len(all_hexagons) - 1):  # made a 2d array on the basis of y-coordinate value
@@ -69,6 +74,7 @@ def color_identification(hsv):
         elif i + 1 == len(all_hexagons) - 1:
             ordered_2D_hexagons.append(all_hexagons[start:])
 
+# sorting the array in x
     for i in range(len(ordered_2D_hexagons)):
         ordered_2D_hexagons[i] = sorted(ordered_2D_hexagons[i], key=lambda x: x[0])
     print(colors_list)
