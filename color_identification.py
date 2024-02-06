@@ -39,6 +39,7 @@ def color_identification(hsv):
     colors_list = []
     for contours in colorwise_list:
         color_list = []
+        # way to find the centre coordinates of each hexagon
         for contour in contours:
             M = cv2.moments(contour)
             if M['m00'] == 0:
