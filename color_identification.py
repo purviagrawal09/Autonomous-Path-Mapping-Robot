@@ -14,7 +14,7 @@ def color_identification(hsv):
     pink_mask = cv2.inRange(hsv, np.array([160, 0, 0]), np.array([170, 255, 255]))
     blue_mask = cv2.inRange(hsv, np.array([60, 0, 0]), np.array([140, 255, 255]))
 
-    # COLOR_CONTOURS (obtaining the edges of each hexagon of a particular mask and store it in colour_contours array)
+# COLOR_CONTOURS (obtaining the edges of each hexagon of a particular mask and store it in colour_contours array)
     white_contours, _ = cv2.findContours(white_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     cv2.drawContours(img, white_contours, -1, (255, 0, 0), 3)
     red_contours, _ = cv2.findContours(red_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -35,7 +35,7 @@ def color_identification(hsv):
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
 
-    # Color-wise_list stores the complete contour points for each hexagon
+# Color-wise_list stores the complete contour points for each hexagon
     colorwise_list = [white_contours, red_contours, green_contours, yellow_contours, purple_contours, pink_contours,
                       blue_contours]
     colors_list = []
@@ -53,18 +53,18 @@ def color_identification(hsv):
             cv2.circle(img, (cx, cy), 3, (0, 0, 255), -1)
             color_list.append((cx, cy))
         colors_list.append(color_list)
-    # colors_list stores the centers of the hexagons in 2-D array colour-wise
+# colors_list stores the centers of the hexagons in 2-D array colour-wise
 
-    # Converting this 2-D array to 1-D array
+# Converting this 2-D array to 1-D array
     all_hexagons = colors_list[0] + colors_list[1] + colors_list[2] + colors_list[3] + colors_list[4] + \
                    colors_list[5] + colors_list[6]
-    # Now removing multiple occurrences of a single location i.e. blue tiles
+# Now removing multiple occurrences of a single location i.e. blue tiles
     all_hexagons = list(set(all_hexagons))
     
 # sorting the array in y
     all_hexagons = sorted(all_hexagons, key=lambda x: x[1])
 
-    # all hexagons in sorted (x,y) in ordered_2D_hexagon
+# all hexagons in sorted (x,y) in ordered_2D_hexagon
     ordered_2D_hexagons = []
     start = 0
     for i in range(len(all_hexagons) - 1):  # made a 2d array on the basis of y-coordinate value
@@ -78,5 +78,5 @@ def color_identification(hsv):
     for i in range(len(ordered_2D_hexagons)):
         ordered_2D_hexagons[i] = sorted(ordered_2D_hexagons[i], key=lambda x: x[0])
     print(colors_list)
-    # print(ordered_2D_hexagons)
+# print(ordered_2D_hexagons)
     return ordered_2D_hexagons, colors_list
