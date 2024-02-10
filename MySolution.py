@@ -167,7 +167,9 @@ if __name__ == "__main__":
     env.remove_car()
     p.stepSimulation()
     img = env.camera_feed()
-    img = np.ascontiguousarray(img, dtype=np.uint8)
+    
+    # converting the image data to a contiguous array with unsigned 8-bit integer data type.
+    img = np.ascontiguousarray(img, dtype=np.uint8) 
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     cv2.imwrite("image_for_color_identification.jpg", img)
 
